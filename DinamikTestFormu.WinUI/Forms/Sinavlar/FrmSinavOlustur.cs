@@ -20,6 +20,7 @@ namespace DinamikTestFormu.WinUI.Forms.Sinavlar
             _worker.SoruService.Load(null, x => x.Secenekler, x => x.Ders);
             gridControlSoruListesi.DataSource = _worker.SoruService.BindingList();
             SinavSoruListesi = new List<SinavFormSoruDto>();
+            soruSayaci = soruSayaci != 0 ? 0 : soruSayaci;
         }
 
         private void btnListeyeAktar_Click(object sender, EventArgs e)
@@ -55,7 +56,7 @@ namespace DinamikTestFormu.WinUI.Forms.Sinavlar
                 MessageBox.Show("Sınav formu oluşturmak için lütfen listeye soru ekleyiniz", "Uyarı");
                 return;
             }
-            List<SinavFormSoruDto> sinavFormuSorulari = new List<SinavFormSoruDto>();
+            List<SinavFormSoruDto> sinavFormuSorulari = new List<SinavFormSoruDto>();  
             var enumerator = lstSecilenSorular.Items.GetEnumerator();
             while(enumerator.MoveNext())
             {
@@ -74,6 +75,22 @@ namespace DinamikTestFormu.WinUI.Forms.Sinavlar
             SinavSoruListesi = sinavFormuSorulari;
             FrmSinavSihirbazi frmSinavSihirbazi = new FrmSinavSihirbazi(SinavSoruListesi);
             frmSinavSihirbazi.ShowDialog();
+        }
+
+        private void btnSeciliSoruyuCikar_Click(object sender, EventArgs e)
+        {
+            if(lstSecilenSorular.SelectedItem != null)
+            {
+                lstSecilenSorular.Items.Remove(lstSecilenSorular.SelectedItem);
+            }
+        }
+
+        private void btnTumSorulariCikar_Click(object sender, EventArgs e)
+        {
+            if(lstSecilenSorular.Items.Count > 0)
+            {
+                lstSecilenSorular.Items.Clear();
+            }
         }
     }
 }

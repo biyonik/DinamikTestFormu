@@ -39,14 +39,19 @@ namespace DinamikTestFormu.WinUI.Forms.Sinavlar
             this.panelSecenekAlani = new System.Windows.Forms.Panel();
             this.pctSoruGorseli = new DevExpress.XtraEditors.PictureEdit();
             this.lblSoruMetni = new DevExpress.XtraEditors.LabelControl();
+            this.lblToplamSoruSayisi = new DevExpress.XtraEditors.LabelControl();
+            this.groupSoruSecenekleri = new DevExpress.XtraEditors.GroupControl();
             ((System.ComponentModel.ISupportInitialize)(this.grpAltMenu)).BeginInit();
             this.grpAltMenu.SuspendLayout();
             this.panelSoruAlani.SuspendLayout();
+            this.panelSecenekAlani.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pctSoruGorseli.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.groupSoruSecenekleri)).BeginInit();
             this.SuspendLayout();
             // 
             // grpAltMenu
             // 
+            this.grpAltMenu.Controls.Add(this.lblToplamSoruSayisi);
             this.grpAltMenu.Controls.Add(this.btnSonrakiSoru);
             this.grpAltMenu.Controls.Add(this.btnSonSoru);
             this.grpAltMenu.Controls.Add(this.btnOncekiSoru);
@@ -67,6 +72,7 @@ namespace DinamikTestFormu.WinUI.Forms.Sinavlar
             this.btnIlkSoru.Size = new System.Drawing.Size(120, 54);
             this.btnIlkSoru.TabIndex = 0;
             this.btnIlkSoru.Text = "İlk Soru";
+            this.btnIlkSoru.Click += new System.EventHandler(this.btnIlkSoru_Click);
             // 
             // btnOncekiSoru
             // 
@@ -77,6 +83,7 @@ namespace DinamikTestFormu.WinUI.Forms.Sinavlar
             this.btnOncekiSoru.Size = new System.Drawing.Size(120, 54);
             this.btnOncekiSoru.TabIndex = 1;
             this.btnOncekiSoru.Text = "Önceki Soru";
+            this.btnOncekiSoru.Click += new System.EventHandler(this.btnOncekiSoru_Click);
             // 
             // btnSonSoru
             // 
@@ -87,6 +94,7 @@ namespace DinamikTestFormu.WinUI.Forms.Sinavlar
             this.btnSonSoru.Size = new System.Drawing.Size(120, 54);
             this.btnSonSoru.TabIndex = 2;
             this.btnSonSoru.Text = "Son Soru";
+            this.btnSonSoru.Click += new System.EventHandler(this.btnSonSoru_Click);
             // 
             // btnSonrakiSoru
             // 
@@ -97,6 +105,7 @@ namespace DinamikTestFormu.WinUI.Forms.Sinavlar
             this.btnSonrakiSoru.Size = new System.Drawing.Size(120, 54);
             this.btnSonrakiSoru.TabIndex = 3;
             this.btnSonrakiSoru.Text = "Sonraki Soru";
+            this.btnSonrakiSoru.Click += new System.EventHandler(this.btnSonrakiSoru_Click);
             // 
             // panelSoruAlani
             // 
@@ -110,6 +119,7 @@ namespace DinamikTestFormu.WinUI.Forms.Sinavlar
             // 
             // panelSecenekAlani
             // 
+            this.panelSecenekAlani.Controls.Add(this.groupSoruSecenekleri);
             this.panelSecenekAlani.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelSecenekAlani.Location = new System.Drawing.Point(0, 326);
             this.panelSecenekAlani.Name = "panelSecenekAlani";
@@ -121,7 +131,10 @@ namespace DinamikTestFormu.WinUI.Forms.Sinavlar
             this.pctSoruGorseli.Dock = System.Windows.Forms.DockStyle.Top;
             this.pctSoruGorseli.Location = new System.Drawing.Point(0, 0);
             this.pctSoruGorseli.Name = "pctSoruGorseli";
-            this.pctSoruGorseli.Properties.ShowCameraMenuItem = DevExpress.XtraEditors.Controls.CameraMenuItemVisibility.Auto;
+            this.pctSoruGorseli.Properties.PictureStoreMode = DevExpress.XtraEditors.Controls.PictureStoreMode.ByteArray;
+            this.pctSoruGorseli.Properties.ShowEditMenuItem = DevExpress.Utils.DefaultBoolean.False;
+            this.pctSoruGorseli.Properties.ShowMenu = false;
+            this.pctSoruGorseli.Properties.SizeMode = DevExpress.XtraEditors.Controls.PictureSizeMode.Zoom;
             this.pctSoruGorseli.Size = new System.Drawing.Size(638, 156);
             this.pctSoruGorseli.TabIndex = 0;
             // 
@@ -136,6 +149,23 @@ namespace DinamikTestFormu.WinUI.Forms.Sinavlar
             this.lblSoruMetni.Name = "lblSoruMetni";
             this.lblSoruMetni.Size = new System.Drawing.Size(638, 170);
             this.lblSoruMetni.TabIndex = 1;
+            // 
+            // lblToplamSoruSayisi
+            // 
+            this.lblToplamSoruSayisi.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
+            this.lblToplamSoruSayisi.Location = new System.Drawing.Point(248, 43);
+            this.lblToplamSoruSayisi.Name = "lblToplamSoruSayisi";
+            this.lblToplamSoruSayisi.Size = new System.Drawing.Size(142, 24);
+            this.lblToplamSoruSayisi.TabIndex = 4;
+            // 
+            // groupSoruSecenekleri
+            // 
+            this.groupSoruSecenekleri.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupSoruSecenekleri.Location = new System.Drawing.Point(0, 0);
+            this.groupSoruSecenekleri.Name = "groupSoruSecenekleri";
+            this.groupSoruSecenekleri.Size = new System.Drawing.Size(638, 203);
+            this.groupSoruSecenekleri.TabIndex = 0;
+            this.groupSoruSecenekleri.Text = "Soru Seçenekleri";
             // 
             // FrmSinavSihirbazi
             // 
@@ -161,7 +191,9 @@ namespace DinamikTestFormu.WinUI.Forms.Sinavlar
             ((System.ComponentModel.ISupportInitialize)(this.grpAltMenu)).EndInit();
             this.grpAltMenu.ResumeLayout(false);
             this.panelSoruAlani.ResumeLayout(false);
+            this.panelSecenekAlani.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pctSoruGorseli.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.groupSoruSecenekleri)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -177,5 +209,7 @@ namespace DinamikTestFormu.WinUI.Forms.Sinavlar
         private DevExpress.XtraEditors.LabelControl lblSoruMetni;
         private DevExpress.XtraEditors.PictureEdit pctSoruGorseli;
         private System.Windows.Forms.Panel panelSecenekAlani;
+        private DevExpress.XtraEditors.LabelControl lblToplamSoruSayisi;
+        private DevExpress.XtraEditors.GroupControl groupSoruSecenekleri;
     }
 }

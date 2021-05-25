@@ -239,6 +239,7 @@ namespace DinamikTestFormu.WinUI.Forms.Sinavlar
             this.btnTumSorulariCikar.TabIndex = 0;
             this.btnTumSorulariCikar.Text = "<<";
             this.btnTumSorulariCikar.ToolTip = "Tüm Soruları Çıkar";
+            this.btnTumSorulariCikar.Click += new System.EventHandler(this.btnTumSorulariCikar_Click);
             // 
             // btnTumunuAktar
             // 
@@ -261,6 +262,7 @@ namespace DinamikTestFormu.WinUI.Forms.Sinavlar
             this.btnSeciliSoruyuCikar.TabIndex = 0;
             this.btnSeciliSoruyuCikar.Text = "<";
             this.btnSeciliSoruyuCikar.ToolTip = "Seçili Soruyu Çıkar";
+            this.btnSeciliSoruyuCikar.Click += new System.EventHandler(this.btnSeciliSoruyuCikar_Click);
             // 
             // btnListeyeAktar
             // 
