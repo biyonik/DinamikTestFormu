@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+    <PropertyGroup>
+        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+        <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+        <ProjectGuid>{CC036295-8FFB-4FD3-B90D-664F52F8FADF}</ProjectGuid>
+        <OutputType>Library</OutputType>
+        <AppDesignerFolder>Properties</AppDesignerFolder>
+        <RootNamespace>DinamikTestFormu.BusinessLogic</RootNamespace>
+        <AssemblyName>DinamikTestFormu.BusinessLogic</AssemblyName>
+        <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+        <FileAlignment>512</FileAlignment>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+        <PlatformTarget>AnyCPU</PlatformTarget>
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>full</DebugType>
+        <Optimize>false</Optimize>
+        <OutputPath>bin\Debug\</OutputPath>
+        <DefineConstants>DEBUG;TRACE</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+        <PlatformTarget>AnyCPU</PlatformTarget>
+        <DebugType>pdbonly</DebugType>
+        <Optimize>true</Optimize>
+        <OutputPath>bin\Release\</OutputPath>
+        <DefineConstants>TRACE</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+    </PropertyGroup>
+    <ItemGroup>
+        <Reference Include="System" />
+        <Reference Include="System.Core" />
+        <Reference Include="System.Data" />
+        <Reference Include="System.Xml" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="Abstract\Base\IBaseService.cs" />
+        <Compile Include="Abstract\IDersService.cs" />
+        <Compile Include="Abstract\ISecenekService.cs" />
+        <Compile Include="Abstract\ISinavService.cs" />
+        <Compile Include="Abstract\ISinavSoruService.cs" />
+        <Compile Include="Abstract\ISoruService.cs" />
+        <Compile Include="Concrete\Base\BaseManager.cs" />
+        <Compile Include="Concrete\DersManager.cs" />
+        <Compile Include="Concrete\SecenekManager.cs" />
+        <Compile Include="Concrete\SinavManager.cs" />
+        <Compile Include="Concrete\SinavSoruManager.cs" />
+        <Compile Include="Concrete\SoruManager.cs" />
+        <Compile Include="Properties\AssemblyInfo.cs" />
+        <Compile Include="Workers\Abstract\IWorker.cs" />
+        <Compile Include="Workers\Concrete\DtfWorker.cs" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\DinamikTestFormu.DataAccess\DinamikTestFormu.DataAccess.csproj">
+        <Project>{30a7ecae-edb3-490d-8181-2828828cdb59}</Project>
+        <Name>DinamikTestFormu.DataAccess</Name>
+      </ProjectReference>
+      <ProjectReference Include="..\DinamikTestFormu.Entities\DinamikTestFormu.Entities.csproj">
+        <Project>{21a51f2f-e095-456e-aad6-88c32f195390}</Project>
+        <Name>DinamikTestFormu.Entities</Name>
+      </ProjectReference>
+    </ItemGroup>
+    <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+    <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+         Other similar extension points exist, see Microsoft.Common.targets.
+    <Target Name="BeforeBuild">
+    </Target>
+    <Target Name="AfterBuild">
+    </Target>
+    -->
+
+</Project>
