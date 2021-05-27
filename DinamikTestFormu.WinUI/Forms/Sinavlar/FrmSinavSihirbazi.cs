@@ -27,7 +27,7 @@ namespace DinamikTestFormu.WinUI.Forms.Sinavlar
             groupSoruSecenekleri.Controls.Clear();
 
 
-            pctSoruGorseli.Image = sinavFormSoruDto.Gorsel.ByteArrayToImage() ?? System.Array.Empty<byte>().ByteArrayToImage();
+            pctSoruGorseli.Image = sinavFormSoruDto.Gorsel.ByteArrayToImage() ?? null;
             lblSoruMetni.Text = sinavFormSoruDto.Metin;
             int locY = 26;
             

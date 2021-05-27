@@ -176,6 +176,7 @@ namespace DinamikTestFormu.WinUI.Forms.Sinavlar
             this.winExplorerViewSorular.GridControl = this.gridControlSoruListesi;
             this.winExplorerViewSorular.GroupCount = 1;
             this.winExplorerViewSorular.Name = "winExplorerViewSorular";
+            this.winExplorerViewSorular.OptionsSelection.MultiSelect = true;
             this.winExplorerViewSorular.OptionsView.AnimationType = DevExpress.XtraGrid.Views.Base.GridAnimationType.AnimateAllContent;
             this.winExplorerViewSorular.OptionsView.ItemHoverBordersShowMode = DevExpress.XtraGrid.WinExplorer.ItemHoverBordersShowMode.Always;
             this.winExplorerViewSorular.OptionsView.ShowViewCaption = true;
@@ -251,6 +252,7 @@ namespace DinamikTestFormu.WinUI.Forms.Sinavlar
             this.btnTumunuAktar.TabIndex = 0;
             this.btnTumunuAktar.Text = ">>";
             this.btnTumunuAktar.ToolTip = "Tüm Soruları Aktar";
+            this.btnTumunuAktar.Click += new System.EventHandler(this.btnTumunuAktar_Click);
             // 
             // btnSeciliSoruyuCikar
             // 
@@ -287,6 +289,12 @@ namespace DinamikTestFormu.WinUI.Forms.Sinavlar
             // 
             // lstSecilenSorular
             // 
+            this.lstSecilenSorular.Appearance.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.lstSecilenSorular.Appearance.BackColor2 = System.Drawing.Color.White;
+            this.lstSecilenSorular.Appearance.FontStyleDelta = System.Drawing.FontStyle.Bold;
+            this.lstSecilenSorular.Appearance.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.ForwardDiagonal;
+            this.lstSecilenSorular.Appearance.Options.UseBackColor = true;
+            this.lstSecilenSorular.Appearance.Options.UseFont = true;
             this.lstSecilenSorular.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lstSecilenSorular.HorizontalScrollbar = true;
             this.lstSecilenSorular.Location = new System.Drawing.Point(0, 0);

@@ -92,5 +92,31 @@ namespace DinamikTestFormu.WinUI.Forms.Sinavlar
                 lstSecilenSorular.Items.Clear();
             }
         }
+
+        private void btnTumunuAktar_Click(object sender, EventArgs e)
+        {
+            var rowCount = winExplorerViewSorular.DataRowCount;
+            if(rowCount > 0)
+            {
+                int i = 0;
+                while(rowCount > 0)
+                {
+                    ++soruSayaci;
+                    winExplorerViewSorular.SelectRow(i);
+                    var focusedRow = winExplorerViewSorular.GetRow(i) as Soru;
+                    bool soruListedeVarMi = lstSecilenSorular.Items.Cast<SecilenSoruDto>().Any(soru => soru.Id == focusedRow.Id);
+                    SecilenSoruDto secilenSoru = new SecilenSoruDto
+                    {
+                        Id = focusedRow.Id,
+                        DersAdi = focusedRow.Ders.Adi,
+                        SoruSayaci = soruSayaci
+                    };
+                    lstSecilenSorular.Items.Add(secilenSoru);
+                    lstSecilenSorular.ValueMember = secilenSoru.Id.ToString();
+                    ++i;
+                    if (i == rowCount) break;
+                }
+            }
+        }
     }
 }
