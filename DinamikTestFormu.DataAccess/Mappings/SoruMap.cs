@@ -3,6 +3,9 @@ using System.Data.Entity.ModelConfiguration;
 
 namespace DinamikTestFormu.DataAccess.Mappings
 {
+    /// <summary>
+    /// SoruMap sınıfı Sinav entity için Entity Framework tarafında kolon ve tablo konfigürasyonlarını yapar
+    /// </summary>
     public class SoruMap: EntityTypeConfiguration<Soru>
     {
         public SoruMap()

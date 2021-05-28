@@ -1,15 +1,20 @@
 ﻿using DinamikTestFormu.Entities.Concrete;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DinamikTestFormu.DataAccess.Mappings
 {
+    /// <summary>
+    /// DersMap sınıfı Ders entity için Entity Framework tarafında kolon ve tablo konfigürasyonlarını yapar
+    /// </summary>
     public class DersMap: EntityTypeConfiguration<Ders>
     {
+        /// <summary>
+        /// Yapıcı metot
+        /// Ders entity için veritabanı tarafında kolon ve tablo ayarları yapılıyor
+        /// Metot içindeki kodlar Entity Framework'a öz metotlar olup, kodu okuyan kişinin EF bilgisi olması kavramayı kolaylaştıracaktır
+        /// Her bir property LINQ expression olarak ele alınıp, kolon veri uzunluğu ve adı 
+        /// ToTable ile de tablo adı konfigüre ediliyor
+        /// </summary>
         public DersMap()
         {
             Property(d => d.Adi).HasMaxLength(50);
