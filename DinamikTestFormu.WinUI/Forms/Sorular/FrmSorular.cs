@@ -22,6 +22,11 @@ namespace DinamikTestFormu.WinUI.Forms.Sorular
         {
             FrmSoruIslemleri frmSoruIslemleri = new FrmSoruIslemleri(new Soru());
             frmSoruIslemleri.ShowDialog();
+            if (frmSoruIslemleri.kaydedildiMi)
+            {
+                _worker.SoruService.Load(null, s => s.Ders);
+                gridControlSorular.DataSource = _worker.SoruService.BindingList();
+            }
         }
 
         private void sorularAnaMenuAlt_ButtonClose(object sender, EventArgs e)
@@ -56,6 +61,7 @@ namespace DinamikTestFormu.WinUI.Forms.Sorular
             frmSoruIslemleri.ShowDialog();
             if(frmSoruIslemleri.kaydedildiMi)
             {
+                _worker.SoruService.Load(null, s => s.Ders);
                 gridControlSorular.DataSource = _worker.SoruService.BindingList();
             }
         }

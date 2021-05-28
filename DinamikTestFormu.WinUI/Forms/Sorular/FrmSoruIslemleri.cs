@@ -9,7 +9,7 @@ namespace DinamikTestFormu.WinUI.Forms.Sorular
     {
         private Soru _soruEntity;
         private Secenek _secenekEntity;
-        public bool kaydedildiMi { get; set; } = false;
+        public bool kaydedildiMi = false;
         private DtfWorker _worker = new DtfWorker(null);
 
         public FrmSoruIslemleri(Soru soruEntity)
@@ -67,7 +67,6 @@ namespace DinamikTestFormu.WinUI.Forms.Sorular
 
         private void btnSoruKaydet_Click(object sender, EventArgs e)
         {
-            //var secenekCount = _worker.SoruService.GetList(x => x.DersId == _soruEntity.Id).Count();
             if(gridViewSoruSecenekler.DataRowCount < 4 || gridViewSoruSecenekler.DataRowCount > 5 )
             {
                 MessageBox.Show("Seçenek sayısı minimum 4, maksimum 5 olmalıdır", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -85,11 +84,6 @@ namespace DinamikTestFormu.WinUI.Forms.Sorular
 
         private void btnEkle_Click(object sender, EventArgs e)
         {
-            //if (gridViewSoruSecenekler.DataRowCount >= 4 || gridViewSoruSecenekler.DataRowCount >= 5)
-            //{
-            //    MessageBox.Show("Seçenek sayısı minimum 4, maksimum 5 olmalıdır", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //    return;
-            //}
             if(string.IsNullOrEmpty(tbxSoruSecenek.Text))
             {
                 MessageBox.Show("Seçenek boş bırakılamaz", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -105,11 +99,6 @@ namespace DinamikTestFormu.WinUI.Forms.Sorular
             _worker.DetectChanges();
         }
 
-        //private void btnKaydet_Click(object sender, EventArgs e)
-        //{
-        
-        //}
-
         private void btnDuzenle_Click(object sender, EventArgs e)
         {
             if (gridViewSoruSecenekler.GetFocusedRow() == null) return; 
@@ -124,7 +113,6 @@ namespace DinamikTestFormu.WinUI.Forms.Sorular
             {
                 gridViewSoruSecenekler.DeleteSelectedRows();
             }
-            _worker.Commit();
         }
 
         private void btnKaydet_Click(object sender, EventArgs e)
