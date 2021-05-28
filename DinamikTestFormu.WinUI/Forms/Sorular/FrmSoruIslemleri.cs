@@ -7,11 +7,24 @@ namespace DinamikTestFormu.WinUI.Forms.Sorular
 {
     public partial class FrmSoruIslemleri : DevExpress.XtraEditors.XtraForm
     {
+        /// <summary>
+        /// Soru tipinde _soruEntity adında bir Field
+        /// Secenek tipinde _secenekEntity adında bir Field
+        /// bool tipinde kaydedildiMi adında bir field
+        /// DtfWorker tipinde _worker adında bir nesne örneği
+        /// </summary>
         private Soru _soruEntity;
         private Secenek _secenekEntity;
         public bool kaydedildiMi = false;
         private DtfWorker _worker = new DtfWorker(null);
 
+        /// <summary>
+        /// Yapıcı metot
+        /// Soru tipinde bir parametre alır
+        /// _soruEntity, dependency injection ile parametre olara gelen soruEntity e bağlanır
+        /// Eğer soruEntity.Id propertsi null ise bu nesnenin ilk oluşturulması anlamına gelir ve şart bloğunda soruEntity.Id değeri yeni bir Guid değeri alır
+        /// </summary>
+        /// <param name="soruEntity"></param>
         public FrmSoruIslemleri(Soru soruEntity)
         {
             InitializeComponent();
@@ -20,36 +33,59 @@ namespace DinamikTestFormu.WinUI.Forms.Sorular
             {
                 _soruEntity.Id = Guid.NewGuid();
             }
+            // DersService Load ile tüm dersler yükleniyor
             _worker.DersService.Load(null);
+            // SecenekService Load ile bu sorunun Id değeri ile eşleşen seçenekler yükleniyor, devamında Soru bilgisi de alınıyor
             _worker.SecenekService.Load(x => x.SoruId == _soruEntity.Id, x => x.Soru);
+            // SoruService Load ile parametre olarak gelen soruEntity.Id değeri ile eşleşen sorular getiriliyor, devamında ilişkili Ders bilgisi alınıyor
             _worker.SoruService.Load(x => x.Id == _soruEntity.Id, x => x.Ders);
-
+            // Seçenekler tabındaki Gridin veri kaynağı SecenekService servisinden BindingList metodundan gelen değerler ile dolduruluyor
             gridControlSoruSecenekler.DataSource = _worker.SecenekService.BindingList();
 
+            // Soru bilgisi tabındaki Dersler combobox nesnesinin veri kaynağı DersService servisindeki BindingList metodundan gelen değerler ile dolduruluyor
             cbxDersler.DataSource = _worker.DersService.BindingList();
+            // combobox'un görüntülenen değeri Adi propertysi, değer fieldi ise Id propertysi ile dolduruluyor
             cbxDersler.DisplayMember = "Adi";
             cbxDersler.ValueMember = "Id";
+            // SoruBinding metodu çalıştırlıyor
             SoruBinding();
+            // soruEntity nin DersId propertysi, soru bilgisi tabındaki combobox'un seçili öğesinin Ders tipine cast edilmesiyle elde edilen entitynin Id değerine atanıyor
             _soruEntity.DersId = ((Ders)cbxDersler.SelectedItem).Id;
         }
 
+        /// <summary>
+        /// Bu metot, Soru Bilgisi tabındaki öğelerin DataBindings değerlerini temizler ve ekler
+        /// DataBindings ile Soru entitynin Metin fieldi, memoedit üzerindeki her değişiklikte güncellenir
+        /// DataBindings ile Soru entitynin Gorsel fieldi, picture üzerindeki her değişiklikte güncellenir
+        /// </summary>
         void SoruBinding()
         {
             cbxDersler.DataBindings.Clear();
             pctGorsel.DataBindings.Clear();
             memoSoruMetni.DataBindings.Clear();
 
-            //cbxDersler.DataBindings.Add(new Binding("SelectedValue", _soruEntity.Ders ?? new Ders(), "Id", false, DataSourceUpdateMode.OnPropertyChanged));
             memoSoruMetni.DataBindings.Add("Text", _soruEntity, "Metin", false, DataSourceUpdateMode.OnPropertyChanged);
             pctGorsel.DataBindings.Add("EditValue", _soruEntity, "Gorsel", false, DataSourceUpdateMode.OnPropertyChanged);
         }
 
+        /// <summary>
+        /// Bu metot, Seçenekler tabındaki  seçenek textbox ı için veri bağlama işlemini yapar
+        /// DataBindings ile Secenek entitynin Opsiyon fieldi, textbox üzerindeki her değişiklikte güncellenir
+        /// </summary>
         void SecenekBinding()
         {
             tbxSoruSecenek.DataBindings.Clear();
             tbxSoruSecenek.DataBindings.Add(new Binding("EditValue", _secenekEntity, "Opsiyon", false, DataSourceUpdateMode.OnPropertyChanged));
         }
 
+        /// <summary>
+        /// Görsel Seç butonunun click aksiyonu
+        /// FrmGorselEditoru sınıfından bir örnek alır
+        /// Dialog olarak ekranda görüntülenir
+        /// frmGorselEditor sınıfının AktarilanResim propertysi null değilse PictureEdit'in Image değeri bu propert'nin değerini alır
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSoruGorselEkle_Click(object sender, EventArgs e)
         {
             FrmGorselEditoru frmGorselEditoru = new FrmGorselEditoru();
@@ -60,11 +96,27 @@ namespace DinamikTestFormu.WinUI.Forms.Sorular
             }
         }
 
+        /// <summary>
+        /// Soru İşlemleri Formunu kapatır
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSoruKapat_Click(object sender, EventArgs e)
         {
             Close();
         }
 
+        /// <summary>
+        /// Kaydet butonu click aksiyonu
+        /// Seçenekler tabındaki gridview üzerindeki satır sayısı 4 veya 5 değilse kullanıcıya Uyarı penceresi gösterir
+        /// Devamında eğer soru metni boş ise kullanıcıya hata penceresi gösterir
+        /// Tüm adımlar doğru ise SoruService servisinin AddOrUpdate metoduna soruEntity parametre olarak verilir ve eklenmek/güncellenmek için entity state te geçilir
+        /// commit ile tüm işlemler veritabanına gönderilir
+        /// kaydedildiMi fieldine true atanır
+        /// Pencere kapatılır
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSoruKaydet_Click(object sender, EventArgs e)
         {
             if(gridViewSoruSecenekler.DataRowCount < 4 || gridViewSoruSecenekler.DataRowCount > 5 )
@@ -82,6 +134,19 @@ namespace DinamikTestFormu.WinUI.Forms.Sorular
             Close();
         }
 
+        /// <summary>
+        /// Seçenekler tabı ekle butonu aksiyonu
+        /// Eğer seçenekler metin kutusu boş ise ekrana hata penceresi gösterilir
+        /// Değilse secenekEntity sınıfı oluşturulur
+        /// secenekEntity.SoruId değeri soruEntity nin Id propertysinin değerini alır
+        /// secenekEntity.Opsiyon değeri secenek metin kutusunun değerini alır
+        /// textBox un DataBinding özelliği temizlenir
+        /// textBox resetlenir
+        /// SecenekService servisi AddOrUpdate ile secenekEntity eklemek/güncellemek üzere hazırlanır
+        /// DetectChanges ile commit öncesi seçenekler kuyruğa alınmış olur
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnEkle_Click(object sender, EventArgs e)
         {
             if(string.IsNullOrEmpty(tbxSoruSecenek.Text))
@@ -99,6 +164,14 @@ namespace DinamikTestFormu.WinUI.Forms.Sorular
             _worker.DetectChanges();
         }
 
+        /// <summary>
+        /// Seçenekler tabı düzenle butonu
+        /// Secenekler tabındaki gridview de eğer bir satıra odaklanılmamış ise metot işlem yapmaz
+        /// Odaklanılmış ise secenekEntity odaklanılan satırın Secenek tipine cast edilmesiyle gelen değeri alır
+        /// SecenekBinding ile bağlama işlemi yapılır
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnDuzenle_Click(object sender, EventArgs e)
         {
             if (gridViewSoruSecenekler.GetFocusedRow() == null) return; 
@@ -106,6 +179,13 @@ namespace DinamikTestFormu.WinUI.Forms.Sorular
             SecenekBinding();
         }
 
+        /// <summary>
+        /// Seçenekler tabı Sil butonu aksiyonu
+        /// Secenekler tabındaki gridview de eğer bir satıra odaklanılmamış ise metot işlem yapmaz
+        /// Değilse kullanıcıya bir seçim penceresi ekranı çıkartır ve seçenek evet ise grid üzerinden silme işlemi yapar (sadece grid üzerinde, henüz commit edilmedi)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSil_Click(object sender, EventArgs e)
         {
             if (gridViewSoruSecenekler.GetFocusedRow() == null) return;
@@ -115,15 +195,29 @@ namespace DinamikTestFormu.WinUI.Forms.Sorular
             }
         }
 
+        /// <summary>
+        /// Seçenekler tabı Kaydet butonu
+        /// SecenekServisi servisinin AddOrUpdate metodu ile secenekEntity ekleme/güncelleme için hazırlanır
+        /// DetectChanges ile commit öncesi seçenekler entity üzerinde kuyruğa alınmış olur
+        /// Seçenekler gridi güncellenir
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnKaydet_Click(object sender, EventArgs e)
         {
-            SoruBinding();
-            SecenekBinding();
             _worker.SecenekService.AddOrUpdate(_secenekEntity);
             _worker.DetectChanges();
             gridViewSoruSecenekler.RefreshData();
         }
 
+        /// <summary>
+        /// Soru Bilgisi tabındaki Dersler comboboxunun her indexi değiştiğinde
+        /// sender bir ComboBox a dönüştürülür ve comboBox adında bir Değişkene atanır
+        /// Guid tipinde selectedValue değişkenine comboboxun seçili değerinin Ders tipine cast edilmesi ile gelen Ders entitynin Id değeri atanıyor
+        /// soruEntity.DersId propertysine selectedValue değeri atanıyor
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cbxDersler_SelectedIndexChanged(object sender, EventArgs e)
         {
             ComboBox comboBox = sender as ComboBox;
